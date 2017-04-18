@@ -1,8 +1,8 @@
+from source import game
+
 class ObjectManager:
-    def __init__(self, screen, space):
+    def __init__(self):
         self.objects = set()
-        self.screen = screen
-        self.space = space
         self.to_remove = set()
 
     def register(self, object):
@@ -19,12 +19,12 @@ class ObjectManager:
     def update_all(self):
         # print(self.objects)
         for obj in self.objects:
-            obj.update(self.space)
+            obj.update()
         self.process_removals()
 
     def draw_all(self):
         for obj in self.objects:
-            obj.draw(self.screen)
+            obj.draw()
 
     def get_object_from_shape(self, shape):
         for obj in self.objects:

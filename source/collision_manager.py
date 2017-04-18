@@ -3,15 +3,16 @@ import math
 import pygame
 import pymunk
 
+from source import game
 from source.constants import *
 from source.utilities import TextLabel
 
 class CollisionManager:
-    def __init__(self, space, object_manager, screen):
-        self.om = object_manager
-        self.screen = screen
-        space.add_collision_handler(CT_BOMBER, CT_ASTEROID).post_solve = self.bomber_asteroid
-        space.add_collision_handler(CT_ASTEROID, CT_ASTEROID).post_solve = self.asteroid_asteroid
+    def __init__(self):
+        self.om = game.object_manager
+        self.screen = game.screen
+        game.space.add_collision_handler(CT_BOMBER, CT_ASTEROID).post_solve = self.bomber_asteroid
+        game.space.add_collision_handler(CT_ASTEROID, CT_ASTEROID).post_solve = self.asteroid_asteroid
 
     def bomber_asteroid(self, arbiter, space, data):
         if arbiter.is_first_contact:

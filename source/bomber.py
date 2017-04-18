@@ -3,11 +3,12 @@ from pygame.locals import *
 
 import pymunk
 
+from source import game
 from source.constants import *
 from source.utilities import *
 
 class Bomber:
-    def __init__(self, space, event_manager):
+    def __init__(self):
         self.width = width = BOMBER_WIDTH
         self.height = height = BOMBER_HEIGHT
         vertices = [
@@ -40,6 +41,8 @@ class Bomber:
         self.braking = False
 
         # Register callback functors
+        event_manager = game.event_manager
+
         event_manager.register_keydown(K_LEFT, self.cb_left_turn_on)
         event_manager.register_keydown(K_RIGHT, self.cb_right_turn_on)
         event_manager.register_keydown(K_UP, self.cb_thrust_forwards_on)
@@ -51,7 +54,7 @@ class Bomber:
         event_manager.register_keyup(K_DOWN, self.cb_thrust_backwards_off)
 
         # Add to space
-        space.add(self.body, self.shape)
+        game.space.add(self.body, self.shape)
 
     def cb_left_turn_on(self, event):
         self.turning_left = True
@@ -74,12 +77,12 @@ class Bomber:
     def hit(self, damage):
         self.strength -= damage
         if self.strength < 0:
-            
+
             print("SHIP DESTROYED")
             self.strength = BOMBER_STRENGTH
 
-    def update(self, space):
-        Utils.wrap_body(space, self.body, radius=(self.width / 2))
+    def update(self):
+        Utils.wrap_body(self.body, radius=(self.width / 2))
 
         # print(str(self.body.angular_velocity))
         if self.turning_left and not self.turning_right and self.body.angular_velocity < self.ang_vel_limit:
@@ -106,8 +109,8 @@ class Bomber:
             self.body.apply_force_at_local_point(force, point)
         # print(str(self.body.torque))
 
-    def draw(self, screen):
-        pass
+    def draw(self):
+        screen = game.screen
         # width, height = Utils.get_screen_size()
         # print (str(self.body.position))
         # position = int(self.body.position.x), \

@@ -1,5 +1,6 @@
 import pygame
 
+from source import game
 from source.object_manager import *
 
 class Utils:
@@ -8,7 +9,7 @@ class Utils:
         return pygame.display.get_surface().get_size()
 
     @staticmethod
-    def wrap_body(space, body, radius=0):
+    def wrap_body(body, radius=0):
         width, height = Utils.get_screen_size()
         new_x = body.position.x
         new_y = body.position.y
@@ -29,7 +30,7 @@ class Utils:
 
         if change_pos:
             body.position = (new_x, new_y)
-            space.reindex_shapes_for_body(body)
+            game.space.reindex_shapes_for_body(body)
 
 
 class TextLabel:
@@ -46,10 +47,10 @@ class TextLabel:
         self.birth = pygame.time.get_ticks()
         self.lifetime = lifetime
 
-    def update(self, space):
+    def update(self):
         age = pygame.time.get_ticks() - self.birth
         if age > self.lifetime:
             self.object_manager.unregister(self)
 
-    def draw(self, screen):
-        screen.blit(self.label, self.pos)
+    def draw(self):
+        game.screen.blit(self.label, self.pos)

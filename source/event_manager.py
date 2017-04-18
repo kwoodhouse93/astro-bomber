@@ -27,15 +27,15 @@ class EventManager:
     def handle_events(self):
         events = pygame.event.get()
         for event in events:
-            event_type = event.type
             if event.type == pygame.locals.KEYDOWN:
                 if event.key in self.keydown_map:
                     for functor in self.keydown_map[event.key]:
                         functor(event)
-            if event.type == pygame.locals.KEYUP:
+            elif event.type == pygame.locals.KEYUP:
                 if event.key in self.keyup_map:
                     for functor in self.keyup_map[event.key]:
                         functor(event)
+
             if event.type in self.event_map:
                 for functor in self.event_map[event.type]:
                     functor(event)
