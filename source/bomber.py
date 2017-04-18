@@ -77,9 +77,12 @@ class Bomber:
     def hit(self, damage):
         self.strength -= damage
         if self.strength < 0:
-
             print("SHIP DESTROYED")
-            self.strength = BOMBER_STRENGTH
+            # self.strength = BOMBER_STRENGTH
+            game.object_manager.unregister_player(self)
+
+    def delete(self):
+        game.space.remove(self.body, self.shape)
 
     def update(self):
         Utils.wrap_body(self.body, radius=(self.width / 2))

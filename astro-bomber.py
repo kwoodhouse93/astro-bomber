@@ -13,6 +13,7 @@ from source.bomber import *
 from source.collision_manager import *
 from source.constants import *
 from source.event_manager import *
+from source.hud import *
 from source.object_manager import *
 
 def main():
@@ -30,7 +31,7 @@ def main():
 
     game.object_manager = om = ObjectManager()
     bomber = Bomber()
-    om.register(bomber)
+    om.register_player(bomber)
 
     game.collision_manager = CollisionManager()
 
@@ -39,6 +40,9 @@ def main():
         om.register(Asteroid(size))
     # asteroid = Asteroid(space, 6)
     # object_manager.register(asteroid)
+
+    hud = HeadsUpDisplay()
+    om.register(hud)
 
     draw_options = pymunk.pygame_util.DrawOptions(game.screen)
 

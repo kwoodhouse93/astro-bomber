@@ -35,7 +35,7 @@ class Utils:
 
 class TextLabel:
     def __init__(self, label, pos, object_manager, lifetime = 1000):
-        print(label)
+        # print(label)
         self.font = pygame.font.SysFont(None, 20)
 
         self.pos = pos
@@ -51,6 +51,9 @@ class TextLabel:
         age = pygame.time.get_ticks() - self.birth
         if age > self.lifetime:
             self.object_manager.unregister(self)
+
+    def delete(self):
+        del(self)
 
     def draw(self):
         game.screen.blit(self.label, self.pos)

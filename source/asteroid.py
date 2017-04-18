@@ -32,7 +32,13 @@ class Asteroid:
         self.strength -= damage
         if self.strength < 0:
             print("Asteroid destroyed")
+            game.object_manager.unregister(self)
 
+    def delete(self):
+        game.space.remove(self.body, self.shape)
+        # if self.size > 3:
+            # Spawn between 2 and 5 smaller asteroids
+            # Find a way to split the size into
 
     def update(self):
         Utils.wrap_body(self.body, radius=self.radius)
