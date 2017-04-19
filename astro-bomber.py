@@ -38,10 +38,8 @@ def main():
     for i in range(10):
         rand_factor = ASTEROID_MAX_SIZE - ASTEROID_MIN_SIZE
         size = (random.random() * rand_factor) + ASTEROID_MIN_SIZE
-        om.register(Asteroid(size))
-    # asteroid = Asteroid(space, 6)
-    # object_manager.register(asteroid)
-
+        Asteroid(size)
+        
     hud = HeadsUpDisplay()
     om.register(hud)
 

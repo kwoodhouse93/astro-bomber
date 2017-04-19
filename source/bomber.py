@@ -49,6 +49,9 @@ class Bomber:
         event_manager.register_keydown(K_UP, self.cb_thrust_forwards_on)
         event_manager.register_keydown(K_DOWN, self.cb_thrust_backwards_on)
         event_manager.register_keydown(K_LSHIFT, self.cb_fire_primary_weapon)
+        event_manager.register_keydown(K_RSHIFT, self.cb_fire_primary_weapon)
+        event_manager.register_keydown(K_LCTRL, self.cb_fire_secondary_weapon)
+        event_manager.register_keydown(K_RCTRL, self.cb_fire_secondary_weapon)
 
         event_manager.register_keyup(K_LEFT, self.cb_left_turn_off)
         event_manager.register_keyup(K_RIGHT, self.cb_right_turn_off)
@@ -62,6 +65,8 @@ class Bomber:
         self.components = []
         self.primary_weapon = PrimaryCannon(self)
         self.components.append(self.primary_weapon)
+        self.secondary_weapon = SecondaryBombLauncher(self)
+        self.components.append(self.secondary_weapon)
 
     def cb_left_turn_on(self, event):
         self.turning_left = True
@@ -83,6 +88,8 @@ class Bomber:
 
     def cb_fire_primary_weapon(self, event):
         self.primary_weapon.activate()
+    def cb_fire_secondary_weapon(self, event):
+        self.secondary_weapon.activate()
 
     def hit(self, damage):
         self.strength -= damage

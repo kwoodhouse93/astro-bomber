@@ -35,7 +35,10 @@ class Asteroid:
 
         self.strength = ASTEROID_BASE_STRENGTH * size
 
+        game.object_manager.register(self)
+
     def hit(self, damage):
+        print('Asteroid hit by damage of ' + str(damage))
         self.strength -= damage
         if self.strength < 0:
             print("Asteroid destroyed")
@@ -44,10 +47,7 @@ class Asteroid:
     def delete(self):
         # print('Deleting asteroid')
         game.space.remove(self.body, self.shape)
-
-        print('Destroyed radius was ' + str(self.radius))
-
-
+        # print('Destroyed radius was ' + str(self.radius))
         # if self.size > (ASTEROID_MIN_SIZE * 3):
         #     new_size = math.sqrt((self.size*self.size) / 3)
         #     print('Spawning 3 asteroids of size ' + str(new_size))
@@ -64,7 +64,7 @@ class Asteroid:
             max_radius = remaining = self.radius
 
             while remaining > ASTEROID_MIN_SIZE**2:
-                print('Radius remaining: ' + str(remaining))
+                # print('Radius remaining: ' + str(remaining))
                 # Take a valid-asteroid-sized chunk that is no bigger than:
                 #   half the one just destroyed
                 #   the remaining amount of asteroid to build with
@@ -75,7 +75,7 @@ class Asteroid:
                 # Take the new size away from the remaining amount
                 remaining -= new_size
                 # Create the new asteroid
-                game.object_manager.register(Asteroid(math.sqrt(new_size), self.body.position))
+                Asteroid(math.sqrt(new_size), self.body.position)
 
     def update(self):
         Utils.wrap_body(self.body, radius=self.radius)
