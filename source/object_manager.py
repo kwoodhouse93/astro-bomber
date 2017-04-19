@@ -22,11 +22,16 @@ class ObjectManager:
         self.unregister(object)
 
     def process_removals(self):
-        for obj in self.to_remove:
+        # Copy the removal list in case any 'delete()' methods add to it
+        removing = self.to_remove.copy()
+
+        for obj in removing:
             # print("Removing object: " + str(obj))
             obj.delete()
             self.objects.remove(obj)
-        self.to_remove = set()
+
+        # to_remove no longer needs to keep a reference to the items just removed
+        self.to_remove = self.to_remove.difference(removing)
 
     def update_all(self):
         for obj in self.objects:

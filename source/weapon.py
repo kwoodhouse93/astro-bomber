@@ -33,7 +33,7 @@ class Projectile:
             game.object_manager.unregister(self)
 
     def delete(self):
-        print('Bullet removed')
+        # print('Bullet removed')
         game.space.remove(self.body, self.shape)
 
     def draw(self):
