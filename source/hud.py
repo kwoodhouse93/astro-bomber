@@ -37,10 +37,10 @@ class HealthBar:
 
     # Update the size of the foreground rectangle
     def update(self):
-        if hasattr(self.tracking, 'strength'):
-            self.tracked_value = self.tracking.strength
-        else:
-            self.tracked_value = 0
+        # if hasattr(self.tracking, 'strength'):
+        self.tracked_value = self.tracking.strength
+        # else:
+            # self.tracked_value = 0
         self.value = self.tracked_value / self.max_val
 
         fg_width = self.size[0] * self.value

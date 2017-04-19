@@ -6,6 +6,7 @@ import pymunk
 from source import game
 from source.constants import *
 from source.utilities import *
+from source.weapon import *
 
 class Bomber:
     def __init__(self):
@@ -47,6 +48,7 @@ class Bomber:
         event_manager.register_keydown(K_RIGHT, self.cb_right_turn_on)
         event_manager.register_keydown(K_UP, self.cb_thrust_forwards_on)
         event_manager.register_keydown(K_DOWN, self.cb_thrust_backwards_on)
+        event_manager.register_keydown(K_LSHIFT, self.cb_fire_primary_weapon)
 
         event_manager.register_keyup(K_LEFT, self.cb_left_turn_off)
         event_manager.register_keyup(K_RIGHT, self.cb_right_turn_off)
@@ -55,6 +57,11 @@ class Bomber:
 
         # Add to space
         game.space.add(self.body, self.shape)
+
+        # Add components
+        self.components = []
+        self.primary_weapon = PrimaryCannon(self)
+        self.components.append(self.primary_weapon)
 
     def cb_left_turn_on(self, event):
         self.turning_left = True
@@ -74,6 +81,9 @@ class Bomber:
     def cb_thrust_backwards_off(self, event):
         self.braking = False
 
+    def cb_fire_primary_weapon(self, event):
+        self.primary_weapon.activate()
+
     def hit(self, damage):
         self.strength -= damage
         if self.strength < 0:
@@ -83,6 +93,8 @@ class Bomber:
 
     def delete(self):
         game.space.remove(self.body, self.shape)
+        for component in self.components:
+            game.object_manager.unregister(component)
 
     def update(self):
         Utils.wrap_body(self.body, radius=(self.width / 2))

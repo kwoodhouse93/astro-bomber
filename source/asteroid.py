@@ -8,7 +8,7 @@ from source.utilities import *
 class Asteroid:
     def __init__(self, size):
         self.radius = size * size
-        mass = size
+        mass = ASTEROID_BASE_MASS * size
         moment = pymunk.moment_for_circle(mass, 0, self.radius)
         self.body = pymunk.Body(mass, moment)
 
